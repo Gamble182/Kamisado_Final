@@ -1,8 +1,8 @@
 import Arena
 from MCTS import MCTS
-from Kami.KamisadoGame import KamisadoGame
-from Kami.KamisadoPlayers import *
-from Kami.keras.NNet import NNetWrapper as NNet
+from Kamisado.KamisadoGame import KamisadoGame
+from Kamisado.KamisadoPlayers import *
+from Kamisado.keras.NNet import NNetWrapper as NNet
 
 
 import numpy as np
@@ -22,18 +22,13 @@ g = KamisadoGame(8)
 rp = RandomPlayer(g).play
 hp = HumanKamisadoPlayer(g).play
 
-arena = Arena.Arena(hp, rp, g, display=KamisadoGame.display) #
+arena = Arena.Arena(hp, rp, g, display=KamisadoGame.display) # OthelloGame
 
 print(arena.playGames(2, verbose=True))
 
 
-
-'''
-# nnet players
+'''# nnet players
 n1 = NNet(g)
-if mini_othello:
-    n1.load_checkpoint('./pretrained_models/othello/pytorch/','6x100x25_best.pth.tar')
-else:
     n1.load_checkpoint('./pretrained_models/othello/pytorch/','8x8_100checkpoints_best.pth.tar')
 args1 = dotdict({'numMCTSSims': 50, 'cpuct':1.0})
 mcts1 = MCTS(g, n1, args1)

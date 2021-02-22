@@ -155,6 +155,6 @@ class KamisadoGame():
             for x in range(n):
                 piece = board[y][x]  # piece
                 print(KamisadoGame.square_content_pieces[piece], end=" ")
-                print("|")
+            print("|")
 
-            print("-----------------------")
+        print("-----------------------")
