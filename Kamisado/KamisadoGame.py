@@ -16,7 +16,7 @@ Use 1 for player1 and -1 for player2.
 See othello/OthelloGame.py for an example implementation.
 """
 
-
+# black= 1 white= -1
 class KamisadoGame():
     square_content_pieces = {
         -1: "w1",
