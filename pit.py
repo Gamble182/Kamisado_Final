@@ -1,8 +1,8 @@
 import Arena
 from MCTS import MCTS
-from Kamisado.KamisadoGame import KamisadoGame
-from Kamisado.KamisadoPlayers import *
-from Kamisado.keras.NNet import NNetWrapper as NNet
+from Kami.KamisadoGame import KamisadoGame
+from Kami.KamisadoPlayers import *
+from Kami.keras.NNet import NNetWrapper as NNet
 
 
 import numpy as np

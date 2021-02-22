@@ -6,9 +6,9 @@ from Coach import Coach
 # from othello.OthelloGame import OthelloGame as Game
 # from tictactoe.TicTacToeGame import TicTacToeGame as Game
 # from othello.pytorch.NNet import NNetWrapper as nn
-from Kamisado.KamisadoGame import KamisadoGame as Game
+from Kami.KamisadoGame import KamisadoGame as Game
 # from tictactoe.keras.NNet import NNetWrapper as nn
-from Kamisado.keras.NNet import NNetWrapper as nn
+from Kami.keras.NNet import NNetWrapper as nn
 from utils import *
 
 log = logging.getLogger(__name__)
