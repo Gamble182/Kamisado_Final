@@ -95,9 +95,9 @@ class GameState():
     '''Get all the rook moves for the pawn located at row, col and add these moves to the list'''
 
     def getRookMoves(self, r, c, moves):
-                            #spalte zeile
-        __directionsBlack = ((-1, 0),(-1, -1),(-1, 1))
-        __directionsWhite = ((1, 0),(1, 1),(1, -1))
+        # spalte zeile
+        __directionsBlack = ((-1, 0), (-1, -1), (-1, 1))
+        __directionsWhite = ((1, 0), (1, 1), (1, -1))
         if self.blackToMove:  # white pawn moves
             for d in __directionsBlack:
                 for i in range(1, 8):

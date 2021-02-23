@@ -133,14 +133,95 @@ Draw the suwares on the board.
 
 
 def drawBoard(screen):
-    global colors
-    colors = [p.Color("white"), p.Color("gray")]
-
+    intDimension = int (DIMENSION)
+    colors = {
+        "orange": p.Color("orange"),
+        "blue": p.Color("blue"),
+        "black": p.Color("black"),
+        "pink": p.Color("pink"),
+        "yellow": p.Color("yellow"),
+        "red": p.Color("red"),
+        "green": p.Color("green"),
+        "brown": p.Color("brown")
+    }
+    # Oragne Field
     for row in range(DIMENSION):
         for column in range(DIMENSION):
-            color = colors[((row + column) % 2)]
-            p.draw.rect(screen, color, p.Rect(column * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+            if row == column:  # spalte , zeile
+                p.draw.rect(screen, colors["orange"], p.Rect(column * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
 
+    # blue field
+    p.draw.rect(screen, colors["blue"], p.Rect((2 - 1) * SQ_SIZE, (1 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["blue"], p.Rect((5 - 1) * SQ_SIZE, (2 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["blue"], p.Rect((8 - 1) * SQ_SIZE, (3 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["blue"], p.Rect((3 - 1) * SQ_SIZE, (4 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["blue"], p.Rect((6 - 1) * SQ_SIZE, (5 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["blue"], p.Rect((1 - 1) * SQ_SIZE, (6 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["blue"], p.Rect((4 - 1) * SQ_SIZE, (7 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["blue"], p.Rect((7 - 1) * SQ_SIZE, (8 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+
+    # purple field
+    p.draw.rect(screen, colors["black"], p.Rect((3 - 1) * SQ_SIZE, (1 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["black"], p.Rect((8 - 1) * SQ_SIZE, (2 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["black"], p.Rect((5 - 1) * SQ_SIZE, (3 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["black"], p.Rect((2 - 1) * SQ_SIZE, (4 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["black"], p.Rect((7 - 1) * SQ_SIZE, (5 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["black"], p.Rect((4 - 1) * SQ_SIZE, (6 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["black"], p.Rect((1 - 1) * SQ_SIZE, (7 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["black"], p.Rect((6 - 1) * SQ_SIZE, (8 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+
+    # pink field
+    pinkCount = 3
+    pinkCount2 = 7
+    for row in range(intDimension//2):
+        for column in range(1):
+            p.draw.rect(screen, colors["pink"], p.Rect(pinkCount * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+            pinkCount -= 1
+
+    for row in range(intDimension//2, intDimension):
+        for column in range(1):
+            p.draw.rect(screen, colors["pink"], p.Rect(pinkCount2 * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+            pinkCount2 -= 1
+
+    # yellow field
+    yellowCount = 4
+    yellowCount2 = 0
+    for row in range(intDimension//2):
+        for column in range(1):
+            p.draw.rect(screen, colors["yellow"], p.Rect(yellowCount * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+            yellowCount += 1
+
+    for row in range(intDimension//2, intDimension):
+        for column in range(1):
+            p.draw.rect(screen, colors["yellow"], p.Rect(yellowCount2 * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+            yellowCount2 += 1
+
+    # red field
+    p.draw.rect(screen, colors["red"], p.Rect((6 - 1) * SQ_SIZE, (1 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["red"], p.Rect((1 - 1) * SQ_SIZE, (2 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["red"], p.Rect((4 - 1) * SQ_SIZE, (3 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["red"], p.Rect((7 - 1) * SQ_SIZE, (4 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["red"], p.Rect((2 - 1) * SQ_SIZE, (5 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["red"], p.Rect((5 - 1) * SQ_SIZE, (6 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["red"], p.Rect((8 - 1) * SQ_SIZE, (7 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["red"], p.Rect((3 - 1) * SQ_SIZE, (8 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+
+    # green field
+    p.draw.rect(screen, colors["green"], p.Rect((7 - 1) * SQ_SIZE, (1 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["green"], p.Rect((4 - 1) * SQ_SIZE, (2 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["green"], p.Rect((1 - 1) * SQ_SIZE, (3 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["green"], p.Rect((6 - 1) * SQ_SIZE, (4 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["green"], p.Rect((3 - 1) * SQ_SIZE, (5 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["green"], p.Rect((8 - 1) * SQ_SIZE, (6 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["green"], p.Rect((5 - 1) * SQ_SIZE, (7 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["green"], p.Rect((2 - 1) * SQ_SIZE, (8 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+
+    # brwon field
+    brownCount = 7
+    for row in range(DIMENSION):
+        for column in range(1):
+            p.draw.rect(screen, colors["brown"], p.Rect(brownCount * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+            brownCount -= 1
 
     colors = {
             "orange": p.Color("#FF6A00"),
