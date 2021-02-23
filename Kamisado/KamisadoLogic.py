@@ -61,13 +61,12 @@ class Board():
         (1 for white, -1 for black
         """
         moves = set()  # stores the legal moves.
-        self.color = get_player(color)
 
         # Get all the squares with pieces of the given color.
         for y in range(self.n):
             for x in range(self.n):
                 if self[x][y] == color:
-                    piece = ColorBoard.Board[x][y][0]
+                    piece = ColorBoard.Board[x][y]
                     if piece == '1':
                         newmoves = self.get_moves_for_square((x, y))
                         moves.update(newmoves)
@@ -89,8 +88,6 @@ class Board():
         of the returned moves is (3,7) because everything from there to (3,4)
         is flipped.
         """
-        __directionsBlack = [(0, -1), (-1, -1), (1, -1)]
-        __directionsWhite = [(0, 1), (1, 1), (-1, 1)]
         (x, y) = square
 
         # determine the color of the piece.
@@ -111,7 +108,7 @@ class Board():
                 if 0 <= endRow < 8 and 0 <= endCol < 8:
                     endPiece = self.board[endRow][endCol]
                     if endPiece == 0:
-                        moves.append()
+                        moves.append(endPiece)
                     elif endPiece[0] != 0:
                         break
                     # print(square,move,direction)
@@ -119,11 +116,16 @@ class Board():
             # return the generated move list
             return moves
         else:
-            for direction in self.__directionsWhite:
-                move = self._discover_move(square, direction)
-                if move:
-                    # print(square,move,direction)
-                    moves.append(move)
+            for d in self.__directionsWhite:
+                for i in range(1, 8):
+                    endRow = x + d[0] * i
+                    endCol = y + d[1] * i
+                if 0 <= endRow < 8 and 0 <= endCol < 8:
+                    endPiece = self.board[endRow][endCol]
+                    if endPiece == 0:
+                        moves.append(endPiece)
+                    elif endPiece[0] != 0:
+                        break
 
             # return the generated move list
             return moves

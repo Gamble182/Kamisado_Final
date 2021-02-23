@@ -16,7 +16,7 @@ Use 1 for player1 and -1 for player2.
 See othello/OthelloGame.py for an example implementation.
 """
 
-
+# black= 1 white= -1
 class KamisadoGame():
     square_content_pieces = {
         -1: "w1",
@@ -67,7 +67,7 @@ class KamisadoGame():
         return self.n * 3 * self.n + 1
 
     def getNextState(self, board, player, action):
-        if action == self.n * 3 * self.n:
+        if action == self.n* self.n:
             return (board, -player)
         b = Board(self.n)
         b.pieces = np.copy(board)
@@ -76,47 +76,34 @@ class KamisadoGame():
         return (b.pieces, -player)
 
     def getValidMoves(self, board, player):
-
-        """
-        Input:
-            board: current board
-            player: current player
-
-        Returns:
-            validMoves: a binary vector of length self.getActionSize(), 1 for
-                        moves that are valid from the current board and player,
-                        0 for invalid moves
-        """
-        pass
+        valids = [0] * self.getActionSize()
+        b = Board(self.n)
+        b.pieces = np.copy(board)
+        legalMoves = b.get_legal_moves(player)
+        print("legalMoves")
+        print(legalMoves)
+        if len(legalMoves) == 0:
+            valids[-1] = 1
+            return np.array(valids)
+        for x, y in legalMoves:
+            valids[self.n * x + y] = 1
+        print("valids")
+        print(valids)
+        return np.array(valids)
 
     def getGameEnded(self, board, player):
-        """
-        Input:
-            board: current board
-            player: current player (1 or -1)
-
-        Returns:
-            r: 0 if game has not ended. 1 if player won, -1 if player lost,
-               small non-zero value for draw.
-
-        """
-        pass
+        # return 0 if not ended, 1 if player 1 won, -1 if player 1 lost
+        # player = 1
+        b = Board(self.n)
+        b.pieces = np.copy(board)
+        if b.has_legal_moves(player):
+            return 0
+        if b.has_legal_moves(-player):
+            return 0
 
     def getCanonicalForm(self, board, player):
-        """
-        Input:
-            board: current board
-            player: current player (1 or -1)
-
-        Returns:
-            canonicalBoard: returns canonical form of board. The canonical form
-                            should be independent of player. For e.g. in chess,
-                            the canonical form can be chosen to be from the pov
-                            of white. When the player is white, we can return
-                            board as is. When the player is black, we can invert
-                            the colors and return the board.
-        """
-        pass
+        # return state if player==1, else return -state if player==-1
+        return player * board
 
     def getSymmetries(self, board, pi):
         """
