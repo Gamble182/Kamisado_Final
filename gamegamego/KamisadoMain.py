@@ -105,11 +105,11 @@ def highlightSquare(screen, gs, validMoves, sqSelected):
         if gs.board[r][c][0] == ('b' if gs.blackToMove else 'w'):  # sqSelected is a piece that chan be moved
             # highlight selected square
             s = p.Surface((SQ_SIZE, SQ_SIZE))
-            s.set_alpha(100)  # transperancy value -> 0 transparent; 255 opaque
-            s.fill(p.Color('blue'))
+            s.set_alpha(130)  # transperancy value -> 0 transparent; 255 opaque
+            s.fill(p.Color('white'))
             screen.blit(s, (c * SQ_SIZE, r * SQ_SIZE))
             # highlight moves from that square
-            s.fill(p.Color('yellow'))
+            s.fill(p.Color('white'))
             for move in validMoves:
                 if move.startRow == r and move.startCol == c:
                     screen.blit(s, (move.endCol * SQ_SIZE, move.endRow * SQ_SIZE))
@@ -151,7 +151,8 @@ def drawBoard(screen):
         "yellow": p.Color("#FFE400"),
         "red": p.Color("#FF0000"),
         "green": p.Color("#4CB200"),
-        "brown": p.Color("#7F3300")
+        "brown": p.Color("#7F3300"),
+
     }
 
     # Oragne Field
