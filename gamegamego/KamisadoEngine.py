@@ -7,14 +7,14 @@ responsible for determining the valid moves at the current state. It will also k
 class GameState():
     def __init__(self):
         self.board = [
-            ["wR", "wR", "wR", "wR", "wR", "wR", "wR", "wR"],
+            ["w1", "w2", "w3", "w4", "w5", "w6", "w7", "w8", ],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["bR", "bR", "bR", "bR", "bR", "bR", "bR", "bR"]
+            ["b8", "b7", "b6", "b5", "b4", "b3", "b2", "b1"]
         ]
         self.boardColors = {
             1: "orange",
@@ -37,7 +37,10 @@ class GameState():
             [3, 8, 5, 2, 7, 4, 1, 6],
             [8, 7, 6, 5, 4, 3, 2, 1]
         ]
-        self.moveFunctions = {'R': self.getTowerMoves}
+        self.moveFunctions = {'8': self.getTowerMoves, '7': self.getTowerMoves, '6': self.getTowerMoves,
+                              '5': self.getTowerMoves, '4': self.getTowerMoves, '3': self.getTowerMoves,
+                              '2': self.getTowerMoves, '1': self.getTowerMoves}
+
         self.blackToMove = True
         self.moveLog = []
         self.gameIsWon = False
@@ -83,8 +86,6 @@ class GameState():
                     self.moveFunctions[piece](r, c, moves)  #
         return moves
 
-
-
     '''Get all the rook moves for the pawn located at row, col and add these moves to the list'''
 
     def getTowerMoves(self, r, c, moves):
@@ -122,7 +123,7 @@ class GameState():
                     else:  # off board
                         break
 
-    def isWin(self,r , c):
+    def isWin(self, r, c):
         if self.blackToMove:
             for i in range(8):
                 if self.board[7][i] == self.board[r][c]:
@@ -131,7 +132,6 @@ class GameState():
             for i in range(8):
                 if self.board[0][i] == self.board[r][c]:
                     self.gameIsWon = True
-
 
 
 class Move():

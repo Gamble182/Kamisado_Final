@@ -133,7 +133,7 @@ Draw the suwares on the board.
 
 def drawBoard(screen):
     intDimension = int(DIMENSION)
-    colors = {
+    '''colors = {
         "orange": p.Color("orange"),
         "blue": p.Color("blue"),
         "black": p.Color("black"),
@@ -142,7 +142,18 @@ def drawBoard(screen):
         "red": p.Color("red"),
         "green": p.Color("green"),
         "brown": p.Color("brown")
+    }'''
+    colors = {
+        "orange": p.Color("#FF6A00"),
+        "blue": p.Color("#0026FF"),
+        "purple": p.Color("#9300FF"),
+        "pink": p.Color("#FF00DC"),
+        "yellow": p.Color("#FFE400"),
+        "red": p.Color("#FF0000"),
+        "green": p.Color("#4CB200"),
+        "brown": p.Color("#7F3300")
     }
+
     # Oragne Field
     for row in range(DIMENSION):
         for column in range(DIMENSION):
@@ -160,14 +171,14 @@ def drawBoard(screen):
     p.draw.rect(screen, colors["blue"], p.Rect((7 - 1) * SQ_SIZE, (8 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
 
     # purple field
-    p.draw.rect(screen, colors["black"], p.Rect((3 - 1) * SQ_SIZE, (1 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
-    p.draw.rect(screen, colors["black"], p.Rect((8 - 1) * SQ_SIZE, (2 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
-    p.draw.rect(screen, colors["black"], p.Rect((5 - 1) * SQ_SIZE, (3 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
-    p.draw.rect(screen, colors["black"], p.Rect((2 - 1) * SQ_SIZE, (4 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
-    p.draw.rect(screen, colors["black"], p.Rect((7 - 1) * SQ_SIZE, (5 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
-    p.draw.rect(screen, colors["black"], p.Rect((4 - 1) * SQ_SIZE, (6 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
-    p.draw.rect(screen, colors["black"], p.Rect((1 - 1) * SQ_SIZE, (7 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
-    p.draw.rect(screen, colors["black"], p.Rect((6 - 1) * SQ_SIZE, (8 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["purple"], p.Rect((3 - 1) * SQ_SIZE, (1 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["purple"], p.Rect((8 - 1) * SQ_SIZE, (2 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["purple"], p.Rect((5 - 1) * SQ_SIZE, (3 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["purple"], p.Rect((2 - 1) * SQ_SIZE, (4 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["purple"], p.Rect((7 - 1) * SQ_SIZE, (5 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["purple"], p.Rect((4 - 1) * SQ_SIZE, (6 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["purple"], p.Rect((1 - 1) * SQ_SIZE, (7 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    p.draw.rect(screen, colors["purple"], p.Rect((6 - 1) * SQ_SIZE, (8 - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
 
     # pink field
     pinkCount = 3
@@ -221,17 +232,6 @@ def drawBoard(screen):
         for column in range(1):
             p.draw.rect(screen, colors["brown"], p.Rect(brownCount * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
             brownCount -= 1
-
-    colors = {
-        "orange": p.Color("#FF6A00"),
-        "blue": p.Color("#0026FF"),
-        "purple": p.Color("#9300FF"),
-        "pink": p.Color("#FF00DC"),
-        "yellow": p.Color("#FFE400"),
-        "red": p.Color("#FF0000"),
-        "green": p.Color("#4CB200"),
-        "brown": p.Color("#7F3300")
-    }
 
 
 '''
