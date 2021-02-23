@@ -1,5 +1,5 @@
 import pygame as p
-from Kamisado_Final.gamegamego import KamisadoEngine
+from gamegamego import KamisadoEngine
 
 '''
 The main driver four our code. This will handle user input and updating the graphics
@@ -18,8 +18,7 @@ Initialize a global dictionary of images. This will be called exactly once in th
 
 
 def loadImages():
-    pieces = ["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR", "bp", "wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR",
-              "wp"]
+    pieces = ["b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "w1", "w2", "w3", "w4", "w5", "w6", "w7", "w8", ]
     for piece in pieces:
         IMAGES[piece] = p.transform.scale(p.image.load("images/" + piece + ".png"), (SQ_SIZE, SQ_SIZE))
 
@@ -60,11 +59,11 @@ def main():
                         playerClicks.append(sqSelected)  # append for both 1st and 2nd clicks
                     if len(playerClicks) == 2:  # after 2nd click
                         move = KamisadoEngine.Move(playerClicks[0], playerClicks[1], gs.board)
-                        #print(move.getChessNotation())
+                        # print(move.getChessNotation())
                         if move in validMoves:
                             moveMade = True
                             gs.makeMove(move)
-                            #gs.isWin(move)
+                            # gs.isWin(move)
                             sqSelected = ()  # reset user clicks
                             playerClicks = []  #
                         else:
@@ -133,7 +132,7 @@ Draw the suwares on the board.
 
 
 def drawBoard(screen):
-    intDimension = int (DIMENSION)
+    intDimension = int(DIMENSION)
     colors = {
         "orange": p.Color("orange"),
         "blue": p.Color("blue"),
@@ -173,12 +172,12 @@ def drawBoard(screen):
     # pink field
     pinkCount = 3
     pinkCount2 = 7
-    for row in range(intDimension//2):
+    for row in range(intDimension // 2):
         for column in range(1):
             p.draw.rect(screen, colors["pink"], p.Rect(pinkCount * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
             pinkCount -= 1
 
-    for row in range(intDimension//2, intDimension):
+    for row in range(intDimension // 2, intDimension):
         for column in range(1):
             p.draw.rect(screen, colors["pink"], p.Rect(pinkCount2 * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
             pinkCount2 -= 1
@@ -186,12 +185,12 @@ def drawBoard(screen):
     # yellow field
     yellowCount = 4
     yellowCount2 = 0
-    for row in range(intDimension//2):
+    for row in range(intDimension // 2):
         for column in range(1):
             p.draw.rect(screen, colors["yellow"], p.Rect(yellowCount * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
             yellowCount += 1
 
-    for row in range(intDimension//2, intDimension):
+    for row in range(intDimension // 2, intDimension):
         for column in range(1):
             p.draw.rect(screen, colors["yellow"], p.Rect(yellowCount2 * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
             yellowCount2 += 1
@@ -224,15 +223,15 @@ def drawBoard(screen):
             brownCount -= 1
 
     colors = {
-            "orange": p.Color("#FF6A00"),
-            "blue": p.Color("#0026FF"),
-            "purple": p.Color("#4800FF"),
-            "pink": p.Color("#FF00DC"),
-            "yellow": p.Color("#FFD800"),
-            "red": p.Color("#FF0000"),
-            "green": p.Color("#4CB200"),
-            "brown": p.Color("#7F3300")
-        }
+        "orange": p.Color("#FF6A00"),
+        "blue": p.Color("#0026FF"),
+        "purple": p.Color("#9300FF"),
+        "pink": p.Color("#FF00DC"),
+        "yellow": p.Color("#FFE400"),
+        "red": p.Color("#FF0000"),
+        "green": p.Color("#4CB200"),
+        "brown": p.Color("#7F3300")
+    }
 
 
 '''
