@@ -10,15 +10,15 @@ Board data:
 Squares are stored and manipulated as (x,y) tuples.
 x is the column, y is the row.
 '''
-# brauchen wir nicht
-'''def get_player(color):
+
+def get_player(color):
     if color > 0:
         return 1
     elif color < 0:
         return -1
     else:
         return 0
-'''
+
 
 
 class Board():
@@ -26,7 +26,7 @@ class Board():
     # brauchen nur eine direction, da das board gespiegelt wird
     __directionsBlack = [(0, -1), (-1, -1), (1, -1)]
 
-    # __directionsWhite = [(0, 1), (1, 1), (-1, 1)]
+    __directionsWhite = [(0, 1), (1, 1), (-1, 1)]
 
     def __init__(self, n):
         "Set up initial board configuration."
@@ -66,20 +66,14 @@ class Board():
         """
         moves = set()  # stores the legal moves.
 
-        if color > 0:
-            player = "b"
-        elif color < 0:
-            player = "w"
-        else: player = "--"
-
         # Get all the squares with pieces of the given color.
         for y in range(self.n):
             for x in range(self.n):
-                if self[x][y] == player:
-                    piece = ColorBoard.Board[x][y]
-                    if piece == 1: # TODO get field-color of last move
-                        newmoves = self.get_moves_for_square((x, y))
-                        moves.update(newmoves)
+                if self[x][y] == color:
+                  #  piece = ColorBoard.Board[x][y]
+                   # if piece == 1: # TODO get field-color of last move
+                    newmoves = self.get_moves_for_square((x, y))
+                    moves.update(newmoves)
         return list(moves)
 
     def has_legal_moves(self, color):
@@ -101,24 +95,21 @@ class Board():
         (x, y) = square
 
         # determine the color of the piece.
-        color = self[x][y]
+        player = self[x][y]
 
             # search all possible directions.
         moves = []
-
-        if color > 0:
-            for d in self.__directionsBlack:
-                for i in range(1, 8):
-                    endRow = x + d[0] * i
-                    endCol = y + d[1] * i
-                if 0 <= endRow < 8 and 0 <= endCol < 8:
-                    endPiece = self.pieces[endRow][endCol]
-                    if endPiece == 0:
-                        moves.append(endPiece)
-                    else:
-                        break
-                    # print(square,move,direction)
-            # return the generated move list
+        # search all possible directions.
+        for d in self.__directionsBlack:
+            for i in range(1, 8):
+                endRow = x + d[0] * i
+                endCol = y + d[1] * i
+            if 0 <= endRow < 8 and 0 <= endCol < 8:
+                endPiece = self.pieces[endRow][endCol]
+                if endPiece == 0:
+                    moves.append(endPiece)
+                else:
+                    break
         return moves
 
     def execute_move(self, move, color):

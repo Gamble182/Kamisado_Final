@@ -1,5 +1,5 @@
 import pygame as p
-from gamegamego import KamisadoEngine
+from Kamisado_final.gamegamego import KamisadoEngine
 
 '''
 The main driver four our code. This will handle user input and updating the graphics
@@ -105,11 +105,11 @@ def highlightSquare(screen, gs, validMoves, sqSelected):
         if gs.board[r][c][0] == ('b' if gs.blackToMove else 'w'):  # sqSelected is a piece that chan be moved
             # highlight selected square
             s = p.Surface((SQ_SIZE, SQ_SIZE))
-            s.set_alpha(100)  # transperancy value -> 0 transparent; 255 opaque
+            s.set_alpha(150)  # transperancy value -> 0 transparent; 255 opaque
             s.fill(p.Color('blue'))
             screen.blit(s, (c * SQ_SIZE, r * SQ_SIZE))
             # highlight moves from that square
-            s.fill(p.Color('yellow'))
+            s.fill(p.Color('black'))
             for move in validMoves:
                 if move.startRow == r and move.startCol == c:
                     screen.blit(s, (move.endCol * SQ_SIZE, move.endRow * SQ_SIZE))

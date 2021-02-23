@@ -18,6 +18,7 @@ See othello/OthelloGame.py for an example implementation.
 
 # black= 1 white= -1
 class KamisadoGame():
+
     square_content_pieces = {
         -1: "w1",
         -2: "w2",
@@ -37,6 +38,7 @@ class KamisadoGame():
         +7: "b7",
         +8: "b8"
     }
+
     square_content_colors = {
         1: "orange",
         2: "blue",
@@ -104,7 +106,7 @@ class KamisadoGame():
 
     def getCanonicalForm(self, board, player):
         # return state if player==1, else return -state if player==-1
-        return player * board
+        pass
 
     def getSymmetries(self, board, pi):
         """
