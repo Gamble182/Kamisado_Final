@@ -34,7 +34,7 @@ def main():
     clock = p.time.Clock()
     screen.fill(p.Color("black"))
     gs = KamisadoEngine.GameState()
-    validMoves = gs.getValidMoves(0)
+    validMoves = gs.getValidMoves()
     moveMade = False  # flag variable for when a move is made
     loadImages()
     running = True
@@ -61,7 +61,6 @@ def main():
                         playerClicks.append(sqSelected)  # append for both 1st and 2nd clicks
                     if len(playerClicks) == 2:  # after 2nd click
                         move = KamisadoEngine.Move(playerClicks[0], playerClicks[1], gs.board)
-                        gs.getValidMoves(playerClicks[1])
                         # print(move.getChessNotation())
                         if move in validMoves:
                             moveMade = True
@@ -71,7 +70,6 @@ def main():
                             playerClicks = []  #
                         else:
                             playerClicks = [sqSelected]
-
             # key handlers
             elif e.type == p.KEYDOWN:
                 if e.key == p.K_z:  # undo when 'z' is pressed
@@ -82,11 +80,10 @@ def main():
                     sqSelected = ()
                     playerClicks = []
                     moveMade = False
-                    gameOver = False
                     animate = False
         if moveMade:
             # animateMove(gs.moveLog[-1], screen, gs.board, clock)
-            validMoves = gs.getValidMoves(0)
+            validMoves = gs.getValidMoves()
             moveMade = False
 
         drawGameState(screen, gs, validMoves, sqSelected)
