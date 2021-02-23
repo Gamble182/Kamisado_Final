@@ -96,10 +96,8 @@ class GameState():
 
     def getRookMoves(self, r, c, moves):
                             #spalte zeile
-        __directionsBlack = ((-1, 0), (0, -1), (1, 0), (0, 1), (-1, -1), (1, 1), (-1, 1))
-        __directionsWhite = ((-1, 0), (0, -1), (1, 0), (0, 1), (-1, -1), (1, 1), (-1, 1))
-        allyColor = "b" if self.blackToMove else "w"
-        print("allyColor ", allyColor)
+        __directionsBlack = ((-1, 0),(-1, -1),(-1, 1))
+        __directionsWhite = ((1, 0),(1, 1),(1, -1))
         if self.blackToMove:  # white pawn moves
             for d in __directionsBlack:
                 for i in range(1, 8):
@@ -110,8 +108,7 @@ class GameState():
                         endPiece = self.board[endRow][endCol]
                         if endPiece == "--":  # empty space valid
                             moves.append(Move((r, c), (endRow, endCol), self.board))
-                        elif endPiece[0] != allyColor:  # not an allypiece (empty or enemypiece )
-                            moves.append(Move((r, c), (endRow, endCol), self.board))
+                        elif endPiece[0] != "--":  # not an allypiece (empty or enemypiece )
                             break
                         else:  # friendl piece invalid
                             break
@@ -121,15 +118,13 @@ class GameState():
             for d in __directionsWhite:
                 for i in range(1, 8):
                     print("white to move")
-
                     endRow = r + d[0] * i
                     endCol = c + d[1] * i
                     if 0 <= endRow < 8 and 0 <= endCol < 8:
                         endPiece = self.board[endRow][endCol]
                         if endPiece == "--":  # empty space valid
                             moves.append(Move((r, c), (endRow, endCol), self.board))
-                        elif endPiece[0] != allyColor:  # not an allypiece (empty or enemypiece )
-                            moves.append(Move((r, c), (endRow, endCol), self.board))
+                        elif endPiece[0] != "--":  # not an allypiece (empty or enemypiece )
                             break
                         else:  # friendl piece invalid
                             break

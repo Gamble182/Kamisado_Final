@@ -1,5 +1,5 @@
 import pygame as p
-from gamegamego import KamisadoEngine
+from Kamisado_Final.gamegamego import KamisadoEngine
 
 '''
 The main driver four our code. This will handle user input and updating the graphics
