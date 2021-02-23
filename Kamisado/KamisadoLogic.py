@@ -75,9 +75,9 @@ class Board():
         # Get all the squares with pieces of the given color.
         for y in range(self.n):
             for x in range(self.n):
-                if self[x][y][0] == player:
+                if self[x][y] == player:
                     piece = ColorBoard.Board[x][y]
-                    if piece == 1:
+                    if piece == 1: # TODO get field-color of last move
                         newmoves = self.get_moves_for_square((x, y))
                         moves.update(newmoves)
         return list(moves)
@@ -103,10 +103,6 @@ class Board():
         # determine the color of the piece.
         color = self[x][y]
 
-        # skip empty source squares.
-        if color == 0:
-            return None
-
             # search all possible directions.
         moves = []
 
@@ -116,14 +112,14 @@ class Board():
                     endRow = x + d[0] * i
                     endCol = y + d[1] * i
                 if 0 <= endRow < 8 and 0 <= endCol < 8:
-                    endPiece = self.board[endRow][endCol]
+                    endPiece = self.pieces[endRow][endCol]
                     if endPiece == 0:
                         moves.append(endPiece)
-                    elif endPiece[0] != 0:
+                    else:
                         break
                     # print(square,move,direction)
             # return the generated move list
-            return moves
+        return moves
 
     def execute_move(self, move, color):
         """Perform the given move on the board;
