@@ -1,5 +1,5 @@
 import pygame as p
-from Kamisado_Final.gamegamego import KamisadoEngine
+from gamegamego import KamisadoEngine
 
 '''
 The main driver four our code. This will handle user input and updating the graphics
@@ -140,6 +140,18 @@ def drawBoard(screen):
         for column in range(DIMENSION):
             color = colors[((row + column) % 2)]
             p.draw.rect(screen, color, p.Rect(column * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+
+
+    colors = {
+            "orange": p.Color("#FF6A00"),
+            "blue": p.Color("#0026FF"),
+            "purple": p.Color("#4800FF"),
+            "pink": p.Color("#FF00DC"),
+            "yellow": p.Color("#FFD800"),
+            "red": p.Color("#FF0000"),
+            "green": p.Color("#4CB200"),
+            "brown": p.Color("#7F3300")
+        }
 
 
 '''
