@@ -1,5 +1,5 @@
 import pygame as p
-from Kamisado_final.gamegamego import KamisadoEngine
+from gamegamego import KamisadoEngine
 
 '''
 The main driver four our code. This will handle user input and updating the graphics
@@ -59,11 +59,11 @@ def main():
                         playerClicks.append(sqSelected)  # append for both 1st and 2nd clicks
                     if len(playerClicks) == 2:  # after 2nd click
                         move = KamisadoEngine.Move(playerClicks[0], playerClicks[1], gs.board)
-                        #print(move.getChessNotation())
+                        # print(move.getChessNotation())
                         if move in validMoves:
                             moveMade = True
                             gs.makeMove(move)
-                            #gs.isWin(move)
+                            # gs.isWin(move)
                             sqSelected = ()  # reset user clicks
                             playerClicks = []  #
                         else:
@@ -106,10 +106,10 @@ def highlightSquare(screen, gs, validMoves, sqSelected):
             # highlight selected square
             s = p.Surface((SQ_SIZE, SQ_SIZE))
             s.set_alpha(100)  # transperancy value -> 0 transparent; 255 opaque
-            s.fill(p.Color('white'))
+            s.fill(p.Color('blue'))
             screen.blit(s, (c * SQ_SIZE, r * SQ_SIZE))
             # highlight moves from that square
-            s.fill(p.Color('white'))
+            s.fill(p.Color('yellow'))
             for move in validMoves:
                 if move.startRow == r and move.startCol == c:
                     screen.blit(s, (move.endCol * SQ_SIZE, move.endRow * SQ_SIZE))
@@ -232,17 +232,6 @@ def drawBoard(screen):
         for column in range(1):
             p.draw.rect(screen, colors["brown"], p.Rect(brownCount * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
             brownCount -= 1
-
-    colors = {
-            "orange": p.Color("#FF6A00"),
-            "blue": p.Color("#0026FF"),
-            "purple": p.Color("#4800FF"),
-            "pink": p.Color("#FF00DC"),
-            "yellow": p.Color("#FFD800"),
-            "red": p.Color("#FF0000"),
-            "green": p.Color("#4CB200"),
-            "brown": p.Color("#7F3300")
-        }
 
 
 '''
