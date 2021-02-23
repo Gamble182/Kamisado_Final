@@ -1,5 +1,5 @@
 import pygame as p
-from gamegamego import KamisadoEngine
+from Kamisado_Final.gamegamego import KamisadoEngine
 
 '''
 The main driver four our code. This will handle user input and updating the graphics
@@ -60,11 +60,11 @@ def main():
                         playerClicks.append(sqSelected)  # append for both 1st and 2nd clicks
                     if len(playerClicks) == 2:  # after 2nd click
                         move = KamisadoEngine.Move(playerClicks[0], playerClicks[1], gs.board)
-                        print(move.getChessNotation())
-
+                        #print(move.getChessNotation())
                         if move in validMoves:
                             moveMade = True
                             gs.makeMove(move)
+                            #gs.isWin(move)
                             sqSelected = ()  # reset user clicks
                             playerClicks = []  #
                         else:
@@ -86,7 +86,7 @@ def main():
             moveMade = False
 
         drawGameState(screen, gs, validMoves, sqSelected)
-        if gs.checkmate:
+        if gs.gameIsWon:
             gameOver = True
             if gs.blackToMove:
                 drawText(screen, 'Black wins!')
