@@ -7,7 +7,7 @@ responsible for determining the valid moves at the current state. It will also k
 class GameState():
     def __init__(self):
         self.board = [
-            ["w1", "w2", "w3", "w4", "w5", "w6", "w7", "w8", ],
+            ["w1", "w2", "w3", "w4", "w5", "w6", "w7", "w8"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
@@ -16,16 +16,6 @@ class GameState():
             ["--", "--", "--", "--", "--", "--", "--", "--"],
             ["b8", "b7", "b6", "b5", "b4", "b3", "b2", "b1"]
         ]
-        self.boardColors = {
-            1: "orange",
-            2: "blue",
-            3: "purple",
-            4: "pink",
-            5: "yellow",
-            6: "red",
-            7: "green",
-            8: "brown"
-        }
 
         self.boardColorValues = [
             [1, 2, 3, 4, 5, 6, 7, 8],
@@ -37,15 +27,15 @@ class GameState():
             [3, 8, 5, 2, 7, 4, 1, 6],
             [8, 7, 6, 5, 4, 3, 2, 1]
         ]
-        self.moveFunctions = {'8': self.getTowerMoves, '7': self.getTowerMoves, '6': self.getTowerMoves,
-                              '5': self.getTowerMoves, '4': self.getTowerMoves, '3': self.getTowerMoves,
-                              '2': self.getTowerMoves, '1': self.getTowerMoves}
+        self.moveFunctions = {'8': self.checkTowerColor, '7': self.checkTowerColor, '6': self.checkTowerColor,
+                              '5': self.checkTowerColor, '4': self.checkTowerColor, '3': self.checkTowerColor,
+                              '2': self.checkTowerColor, '1': self.checkTowerColor}
 
         self.blackToMove = True
         self.moveLog = []
         self.gameIsWon = False
-        # self.whiteKingLocation == (0,0)
-        # self.blackKingLocation == (7,7)
+        self.towerColor = 0
+        self.count =0
 
     '''Takes a Move as a prameter and executes it (this will not work for castling, pawn promotin, and en-passant'''
 
@@ -71,13 +61,21 @@ class GameState():
 
     '''All moves considering checks'''
 
-    def getValidMoves(self):
+    def getValidMoves(self, endSq):
+        if endSq == 0:
+            pass
+        else:
+            row = endSq[0]
+            column = endSq[1]
+            self.towerColor = self.boardColorValues[row][column]
+        self.getAllPossibleMoves()
+
         return self.getAllPossibleMoves()  # for now we will not worry about checks
 
     '''All moves without considering checks'''
 
     def getAllPossibleMoves(self):
-        moves = []
+        moves = [Move((7,4), (4,4), self.board)]
         for r in range(len(self.board)):  # number of rows
             for c in range(len(self.board)):  # number of columns
                 turn = self.board[r][c][0]
@@ -86,13 +84,15 @@ class GameState():
                     self.moveFunctions[piece](r, c, moves)  #
         return moves
 
-    '''Get all the rook moves for the pawn located at row, col and add these moves to the list'''
+    def checkTowerColor(self,r, c , moves):
+        self.getTowerMoves(r,c,moves)
 
+    '''Get all the tower moves for the tower located at row, col and add these moves to the list'''
     def getTowerMoves(self, r, c, moves):
         # spalte zeile
         __directionsBlack = ((-1, 0), (-1, -1), (-1, 1))
         __directionsWhite = ((1, 0), (1, 1), (1, -1))
-        if self.blackToMove:  # white pawn moves
+        if self.blackToMove:  # black player move
             for d in __directionsBlack:
                 for i in range(1, 8):
                     endRow = r + d[0] * i
@@ -123,6 +123,8 @@ class GameState():
                     else:  # off board
                         break
 
+
+
     def isWin(self, r, c):
         if self.blackToMove:
             for i in range(8):
@@ -147,6 +149,8 @@ class Move():
     def __init__(self, startSq, endSq, board):
         self.startRow = startSq[0]
         self.startCol = startSq[1]
+        #self.startRow = 7
+        #self.startCol = 7
         self.endRow = endSq[0]
         self.endCol = endSq[1]
         self.pieceMoved = board[self.startRow][self.startCol]

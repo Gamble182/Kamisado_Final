@@ -1,5 +1,5 @@
 import pygame as p
-from gamegamego import KamisadoEngine
+from Kamisado_Final.gamegamego import KamisadoEngine
 
 '''
 The main driver four our code. This will handle user input and updating the graphics
@@ -34,7 +34,7 @@ def main():
     clock = p.time.Clock()
     screen.fill(p.Color("black"))
     gs = KamisadoEngine.GameState()
-    validMoves = gs.getValidMoves()
+    validMoves = gs.getValidMoves(0)
     moveMade = False  # flag variable for when a move is made
     loadImages()
     running = True
@@ -49,8 +49,10 @@ def main():
             elif e.type == p.MOUSEBUTTONDOWN:
                 if not gameOver:
                     location = p.mouse.get_pos()  # (x,y) location of mouse
+                    print(location)
                     col = location[0] // SQ_SIZE
                     row = location[1] // SQ_SIZE
+                    print(col, row)
                     if sqSelected == (row, col):  # the user clicked the same square twice
                         sqSelected = (row, col)
                         playerClicks = []  # clear player clicks
@@ -59,6 +61,7 @@ def main():
                         playerClicks.append(sqSelected)  # append for both 1st and 2nd clicks
                     if len(playerClicks) == 2:  # after 2nd click
                         move = KamisadoEngine.Move(playerClicks[0], playerClicks[1], gs.board)
+                        gs.getValidMoves(playerClicks[1])
                         # print(move.getChessNotation())
                         if move in validMoves:
                             moveMade = True
@@ -68,6 +71,7 @@ def main():
                             playerClicks = []  #
                         else:
                             playerClicks = [sqSelected]
+
             # key handlers
             elif e.type == p.KEYDOWN:
                 if e.key == p.K_z:  # undo when 'z' is pressed
@@ -78,10 +82,11 @@ def main():
                     sqSelected = ()
                     playerClicks = []
                     moveMade = False
+                    gameOver = False
                     animate = False
         if moveMade:
             # animateMove(gs.moveLog[-1], screen, gs.board, clock)
-            validMoves = gs.getValidMoves()
+            validMoves = gs.getValidMoves(0)
             moveMade = False
 
         drawGameState(screen, gs, validMoves, sqSelected)
