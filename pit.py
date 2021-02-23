@@ -3,8 +3,6 @@ from MCTS import MCTS
 from Kamisado.KamisadoGame import KamisadoGame
 from Kamisado.KamisadoPlayers import *
 from Kamisado.keras.NNet import NNetWrapper as NNet
-
-
 import numpy as np
 from utils import *
 
@@ -19,9 +17,11 @@ human_vs_cpu = True
 g = KamisadoGame(8)
 
 # all players
+'''p1 = HumanTicTacToePlayer(g).play
+p2 = HumanTicTacToePlayer(g).play'''
 rp = RandomPlayer(g).play
 hp = HumanKamisadoPlayer(g).play
-
+#arena = Arena.Arena(p1, p2, g, display=TicTacToeGame.display)
 arena = Arena.Arena(hp, rp, g, display=KamisadoGame.display) # OthelloGame
 
 print(arena.playGames(2, verbose=True))

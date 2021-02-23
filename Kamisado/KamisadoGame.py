@@ -94,12 +94,8 @@ class KamisadoGame():
     def getGameEnded(self, board, player):
         # return 0 if not ended, 1 if player 1 won, -1 if player 1 lost
         # player = 1
-        b = Board(self.n)
-        b.pieces = np.copy(board)
-        if b.has_legal_moves(player):
-            return 0
-        if b.has_legal_moves(-player):
-            return 0
+        pass
+
 
     def getCanonicalForm(self, board, player):
         # return state if player==1, else return -state if player==-1

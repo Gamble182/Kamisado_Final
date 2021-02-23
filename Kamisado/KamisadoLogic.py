@@ -10,19 +10,23 @@ Board data:
 Squares are stored and manipulated as (x,y) tuples.
 x is the column, y is the row.
 '''
-def get_player(color):
+# brauchen wir nicht
+'''def get_player(color):
     if color > 0:
         return 1
     elif color < 0:
         return -1
     else:
         return 0
+'''
 
 
 class Board():
     # list of all 8 directions on the board, as (x,y) offsets
+    # brauchen nur eine direction, da das board gespiegelt wird
     __directionsBlack = [(0, -1), (-1, -1), (1, -1)]
-    __directionsWhite = [(0, 1), (1, 1), (-1, 1)]
+
+    # __directionsWhite = [(0, 1), (1, 1), (-1, 1)]
 
     def __init__(self, n):
         "Set up initial board configuration."
@@ -56,18 +60,24 @@ class Board():
     def __getitem__(self, index):
         return self.pieces[index]
 
-    def get_legal_moves(self, color):
+    def get_legal_moves(self, color):  # color des spielers wird erwartet (aktiver spieler)
         """Returns all the legal moves for the given color.
         (1 for white, -1 for black
         """
         moves = set()  # stores the legal moves.
 
+        if color > 0:
+            player = "b"
+        elif color < 0:
+            player = "w"
+        else: player = "--"
+
         # Get all the squares with pieces of the given color.
         for y in range(self.n):
             for x in range(self.n):
-                if self[x][y] == color:
+                if self[x][y][0] == player:
                     piece = ColorBoard.Board[x][y]
-                    if piece == '1':
+                    if piece == 1:
                         newmoves = self.get_moves_for_square((x, y))
                         moves.update(newmoves)
         return list(moves)
@@ -91,7 +101,7 @@ class Board():
         (x, y) = square
 
         # determine the color of the piece.
-        color = get_player(self[x][y])
+        color = self[x][y]
 
         # skip empty source squares.
         if color == 0:
@@ -112,21 +122,6 @@ class Board():
                     elif endPiece[0] != 0:
                         break
                     # print(square,move,direction)
-
-            # return the generated move list
-            return moves
-        else:
-            for d in self.__directionsWhite:
-                for i in range(1, 8):
-                    endRow = x + d[0] * i
-                    endCol = y + d[1] * i
-                if 0 <= endRow < 8 and 0 <= endCol < 8:
-                    endPiece = self.board[endRow][endCol]
-                    if endPiece == 0:
-                        moves.append(endPiece)
-                    elif endPiece[0] != 0:
-                        break
-
             # return the generated move list
             return moves
 
@@ -139,26 +134,10 @@ class Board():
 
         # Add the piece to the empty square.
         # print(move)
-
-
+        pass
 
 
 class ColorBoard():
-
-    def __init__(self):
-        return Board
-
-    colors = {
-        1: "orange",
-        2: "blue",
-        3: "purple",
-        4: "pink",
-        5: "yellow",
-        6: "red",
-        7: "green",
-        8: "brown"
-    }
-
     Board = [
         [1, 2, 3, 4, 5, 6, 7, 8],
         [6, 1, 4, 7, 2, 5, 8, 3],
