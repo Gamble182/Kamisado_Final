@@ -89,9 +89,9 @@ def main():
         if gs.gameIsWon:
             gameOver = True
             if gs.blackToMove:
-                drawText(screen, 'Black wins!')
-            else:
                 drawText(screen, "White wins!")
+            else:
+                drawText(screen, 'Black wins!')
 
         clock.tick(MAX_FPS)
         p.display.flip()

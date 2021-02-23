@@ -16,6 +16,27 @@ class GameState():
             ["--", "--", "--", "--", "--", "--", "--", "--"],
             ["bR", "bR", "bR", "bR", "bR", "bR", "bR", "bR"]
         ]
+        self.boardColors = {
+            1: "orange",
+            2: "blue",
+            3: "purple",
+            4: "pink",
+            5: "yellow",
+            6: "red",
+            7: "green",
+            8: "brown"
+        }
+
+        self.boardColorValues = [
+            [1, 2, 3, 4, 5, 6, 7, 8],
+            [6, 1, 4, 7, 2, 5, 8, 3],
+            [7, 4, 1, 6, 3, 8, 5, 2],
+            [4, 3, 2, 1, 8, 7, 6, 5],
+            [5, 6, 7, 8, 1, 2, 3, 4],
+            [2, 5, 8, 3, 6, 1, 4, 7],
+            [3, 8, 5, 2, 7, 4, 1, 6],
+            [8, 7, 6, 5, 4, 3, 2, 1]
+        ]
         self.moveFunctions = {'R': self.getTowerMoves}
         self.blackToMove = True
         self.moveLog = []
@@ -35,8 +56,6 @@ class GameState():
             self.whiteKingLocation = (move.endRow, move.endCol)
         if move.pieceMoved == 'wR':
             self.blackKingLocation = (move.endRow, move.endCol)'''
-
-    # def makeMove(self, move):
 
     '''Undo the last move made'''
 
@@ -112,13 +131,6 @@ class GameState():
             for i in range(8):
                 if self.board[0][i] == self.board[r][c]:
                     self.gameIsWon = True
-            '''for r in range(len(self.board)):  # number of rows
-                for c in range(len(self.board)):  # number of columns
-                    turn = self.board[r][c][0]
-                    if (turn == 'b' and self.blackToMove) or (turn == 'w' and not self.blackToMove):
-                        piece = self.board[r][c][1]
-                        self.moveFunctions[piece](r, c, moves)  #
-            return True'''
 
 
 
