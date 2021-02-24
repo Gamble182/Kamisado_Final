@@ -74,12 +74,13 @@ class GameState():
     '''All moves considering checks'''
 
     def getValidMoves(self, endSq, board):
+        print("endSq", endSq)
         if endSq == 0:
             pass
         else:
             row = endSq[0]
             column = endSq[1]
-            self.fieldColor = self.boardColorValues[row][column]
+            self.fieldColor = board[row][column]
             for i in range(len(self.board)):
                 print(self.board[i])
             print("Board getValidMoves towerColor", self.fieldColor)

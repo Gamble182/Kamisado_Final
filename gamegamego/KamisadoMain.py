@@ -42,7 +42,7 @@ def main():
     playerClicks = []  # keep track of player clicks (two tuples: [(6, 4), (4,4)])
     running = True
     gameOver = False
-    playerOne = False #If human is playing black, then this will be True, If an Ai is playing, then it will be false
+    playerOne = True #If human is playing black, then this will be True, If an Ai is playing, then it will be false
     playerTwo = False # Same as about but for white
     while running:
         humanTurn = (gs.blackToMove and playerOne) or (not gs.blackToMove and playerTwo)
@@ -84,14 +84,15 @@ def main():
 
         #AI move finder
         if not gameOver and not humanTurn:
-            AIMove = KamisadoKI.findBestMove(validMoves)
+            AIMove = KamisadoKI.findRandomMove(validMoves)
             gs.makeMove(AIMove)
             moveMade =True
             #animate = True
 
         if moveMade:
             # animateMove(gs.moveLog[-1], screen, gs.board, clock)
-            validMoves = gs.getValidMoves(move.getRows(), gs.board)
+            print(move.getRows())
+            validMoves = gs.getValidMoves(move.getRows(), gs.boardColorValues)
             moveMade = False
 
         drawGameState(screen, gs, validMoves, sqSelected)
