@@ -1,5 +1,5 @@
 import pygame as p
-from Kamisado_Final.gamegamego import KamisadoEngine
+from Kamisado_Final.gamegamego import KamisadoEngine, KamisadoKI
 
 '''
 The main driver four our code. This will handle user input and updating the graphics
@@ -42,12 +42,16 @@ def main():
     playerClicks = []  # keep track of player clicks (two tuples: [(6, 4), (4,4)])
     running = True
     gameOver = False
+    playerOne = False #If human is playing black, then this will be True, If an Ai is playing, then it will be false
+    playerTwo = False # Same as about but for white
     while running:
+        humanTurn = (gs.blackToMove and playerOne) or (not gs.blackToMove and playerTwo)
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
+            # mouse handler
             elif e.type == p.MOUSEBUTTONDOWN:
-                if not gameOver:
+                if not gameOver and humanTurn:
                     location = p.mouse.get_pos()  # (x,y) location of mouse
                     col = location[0] // SQ_SIZE
                     row = location[1] // SQ_SIZE
@@ -77,6 +81,14 @@ def main():
                     playerClicks = []
                     moveMade = False
                     animate = False
+
+        #AI move finder
+        if not gameOver and not humanTurn:
+            AIMove = KamisadoKI.findBestMove(validMoves)
+            gs.makeMove(AIMove)
+            moveMade =True
+            #animate = True
+
         if moveMade:
             # animateMove(gs.moveLog[-1], screen, gs.board, clock)
             validMoves = gs.getValidMoves(move.getRows(), gs.board)
