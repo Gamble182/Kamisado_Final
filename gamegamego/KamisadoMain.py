@@ -59,14 +59,12 @@ def main():
                         playerClicks.append(sqSelected)  # append for both 1st and 2nd clicks
                     if len(playerClicks) == 2:  # after 2nd click
                         move = KamisadoEngine.Move(playerClicks[0], playerClicks[1], gs.board)
-                        #if playerClicks[0] == (8,8)
                         if move in validMoves:
                             moveMade = True
                             gs.makeMove(move)
                             sqSelected = ()  # reset user clicks
                             playerClicks = []  #
                         else:
-                            # break
                             playerClicks = [sqSelected]
             # key handlers
             elif e.type == p.KEYDOWN:
@@ -98,7 +96,6 @@ def main():
 
 '''Highlight square selected and moves for piece selected'''
 
-
 def highlightSquare(screen, gs, validMoves, sqSelected):
     if sqSelected != ():
         r, c = sqSelected
@@ -119,30 +116,18 @@ def highlightSquare(screen, gs, validMoves, sqSelected):
 Responsible for all the graphics within ta curent game state
 '''
 
-
 def drawGameState(screen, gs, validMoves, sqSelected):
     drawBoard(screen)  # draw squares on the board
     highlightSquare(screen, gs, validMoves, sqSelected)
     drawPieces(screen, gs.board)
 
-
 '''
 Draw the suwares on the board.
 '''
 
-
 def drawBoard(screen):
     intDimension = int(DIMENSION)
-    '''colors = {
-        "orange": p.Color("orange"),
-        "blue": p.Color("blue"),
-        "black": p.Color("black"),
-        "pink": p.Color("pink"),
-        "yellow": p.Color("yellow"),
-        "red": p.Color("red"),
-        "green": p.Color("green"),
-        "brown": p.Color("brown")
-    }'''
+
     colors = {
         "orange": p.Color("#FF6A00"),
         "blue": p.Color("#0026FF"),

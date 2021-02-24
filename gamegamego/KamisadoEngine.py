@@ -6,6 +6,19 @@ responsible for determining the valid moves at the current state. It will also k
 
 class GameState():
     def __init__(self):
+        '''
+        self.board = [
+            ["--", "--", "w3", "w4", "w5", "w6", "w7", "w8"],
+            ["--", "--", "--", "--", "--", "--", "--", "--"],
+            ["--", "--", "--", "--", "--", "--", "--", "--"],
+            ["--", "--", "--", "--", "--", "--", "--", "--"],
+            ["--", "--", "--", "--", "--", "--", "--", "--"],
+            ["--", "--", "--", "--", "--", "--", "--", "--"],
+            ["--", "--", "--", "--", "--", "--", "w1", "w2"],
+            ["b8", "b7", "b6", "b5", "b4", "b3", "b2", "b1"]
+        ]
+
+        '''
         self.board = [
             ["w1", "w2", "w3", "w4", "w5", "w6", "w7", "w8"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
@@ -17,6 +30,7 @@ class GameState():
             ["b8", "b7", "b6", "b5", "b4", "b3", "b2", "b1"]
         ]
 
+
         self.boardColorValues = [
             [1, 2, 3, 4, 5, 6, 7, 8],
             [6, 1, 4, 7, 2, 5, 8, 3],
@@ -27,27 +41,26 @@ class GameState():
             [3, 8, 5, 2, 7, 4, 1, 6],
             [8, 7, 6, 5, 4, 3, 2, 1]
         ]
-        self.moveFunctions = {'8': self.checkTowerColor, '7': self.checkTowerColor, '6': self.checkTowerColor,
-                              '5': self.checkTowerColor, '4': self.checkTowerColor, '3': self.checkTowerColor,
-                              '2': self.checkTowerColor, '1': self.checkTowerColor}
+        '''self.moveFunctions = {'8': self.getTowerMoves, '7': self.getTowerMoves, '6': self.getTowerMoves,
+                              '5': self.getTowerMoves, '4': self.getTowerMoves, '3': self.getTowerMoves,
+                              '2': self.getTowerMoves, '1': self.getTowerMoves}'''
+        self.__directionsBlack = ((-1, 0), (-1, -1), (-1, 1))
+        self.__directionsWhite = ((1, 0), (1, 1), (1, -1))
 
         self.blackToMove = True
         self.moveLog = []
         self.gameIsWon = False
-        self.towerColor = 0
+        self.fieldColor = 0
 
-    '''Takes a Move as a prameter and executes it (this will not work for castling, pawn promotin, and en-passant'''
+    '''Takes a Move as a prameter and executes it.'''
 
     def makeMove(self, move):
         self.board[move.startRow][move.startCol] = "--"
         self.board[move.endRow][move.endCol] = move.pieceMoved
         self.moveLog.append(move)  # log the move so we can undo it later
+
         self.blackToMove = not self.blackToMove  # swap players
         self.isWin(move.endRow, move.endCol)
-        '''if move.pieceMoved == 'wR':
-            self.whiteKingLocation = (move.endRow, move.endCol)
-        if move.pieceMoved == 'wR':
-            self.blackKingLocation = (move.endRow, move.endCol)'''
 
     '''Undo the last move made'''
 
@@ -61,14 +74,15 @@ class GameState():
     '''All moves considering checks'''
 
     def getValidMoves(self, endSq, board):
-
         if endSq == 0:
             pass
         else:
             row = endSq[0]
             column = endSq[1]
-            self.towerColor = self.boardColorValues[row][column]
-            print("Board getValidMoves",self.towerColor)
+            self.fieldColor = self.boardColorValues[row][column]
+            for i in range(len(self.board)):
+                print(self.board[i])
+            print("Board getValidMoves towerColor", self.fieldColor)
         return self.getAllPossibleMoves()  # for now we will not worry about checks
 
     '''All moves without considering checks'''
@@ -80,35 +94,34 @@ class GameState():
                 turn = self.board[r][c][0]
                 if (turn == 'b' and self.blackToMove) or (turn == 'w' and not self.blackToMove):
                     piece = self.board[r][c][1]
-                    self.moveFunctions[piece](r, c, moves)
-        return moves
+                    if self.fieldColor == 0:
+                        self.getTowerMoves(r, c, moves)
+                    elif self.fieldColor == 1 and piece == '1':
+                        self.getTowerMoves(r, c, moves)
+                    elif self.fieldColor == 2 and piece == '2':
+                        self.getTowerMoves(r, c, moves)
+                    elif self.fieldColor == 3 and piece == '3':
+                        self.getTowerMoves(r, c, moves)
+                    elif self.fieldColor == 4 and piece == '4':
+                        self.getTowerMoves(r, c, moves)
+                    elif self.fieldColor == 5 and piece == '5':
+                        self.getTowerMoves(r, c, moves)
+                    elif self.fieldColor == 6 and piece == '6':
+                        self.getTowerMoves(r, c, moves)
+                    elif self.fieldColor == 7 and piece == '7':
+                        self.getTowerMoves(r, c, moves)
+                    elif self.fieldColor == 8 and piece == '8':
+                        self.getTowerMoves(r, c, moves)
 
-    def checkTowerColor(self, r, c, moves):
-        self.getTowerMoves(r, c, moves)
+        return moves
 
     '''Get all the tower moves for the tower located at row, col and add these moves to the list'''
 
     def getTowerMoves(self, r, c, moves):
+        self.isBlocked(r,c, moves)
         # spalte zeile
-        __directionsBlack = ((-1, 0), (-1, -1), (-1, 1))
-        __directionsWhite = ((1, 0), (1, 1), (1, -1))
         if self.blackToMove:  # black player move
-            for d in __directionsBlack:
-                for i in range(1, 8):
-                    endRow = r + d[0] * i
-                    endCol = c + d[1] * i
-                    if 0 <= endRow < 8 and 0 <= endCol < 8:
-                        endPiece = self.board[endRow][endCol]
-                        if endPiece == "--":  # empty space valid
-                            moves.append(Move((r, c), (endRow, endCol), self.board))
-                        elif endPiece[0] != "--":  # not an allypiece (empty or enemypiece )
-                            break
-                        else:  # friendl piece invalid
-                            break
-                    else:  # off board
-                        break
-        else:
-            for d in __directionsWhite:
+            for d in self.__directionsBlack:
                 for i in range(1, 8):
                     endRow = r + d[0] * i
                     endCol = c + d[1] * i
@@ -122,6 +135,28 @@ class GameState():
                             break
                     else:  # off board
                         break
+        else:
+            for d in self.__directionsWhite:
+                for i in range(1, 8):
+                    endRow = r + d[0] * i
+                    endCol = c + d[1] * i
+                    if 0 <= endRow < 8 and 0 <= endCol < 8:
+                        endPiece = self.board[endRow][endCol]
+                        if endPiece == "--":  # empty space valid
+                            moves.append(Move((r, c), (endRow, endCol), self.board))
+
+                        elif endPiece[0] != "--":  # not an allypiece (empty or enemypiece )
+                            break
+                        else:  # friendly piece invalid
+                            break
+                    else:  # off board
+                        break
+
+    def isBlocked(self,r ,c , moves):
+        if self.blackToMove:
+            pass
+        else:
+            pass
 
     def isWin(self, r, c):
         if self.blackToMove:
@@ -135,15 +170,6 @@ class GameState():
 
 
 class Move():
-    # maps keys to values
-    # key :value
-    ranksToRows = {"1": 7, "2": 6, "3": 5, "4": 4,
-                   "5": 3, "6": 2, "7": 1, "8": 0}
-    rowsToRanks = {v: k for k, v in ranksToRows.items()}
-    filesToCols = {"a": 0, "b": 1, "c": 2, "d": 3,
-                   "e": 4, "f": 5, "g": 6, "h": 7}
-    colsToFiles = {v: k for k, v in filesToCols.items()}
-
     def __init__(self, startSq, endSq, board):
         self.startRow = startSq[0]
         self.startCol = startSq[1]
@@ -161,12 +187,6 @@ class Move():
         if isinstance(other, Move):
             return self.moveID == other.moveID
         return False
-
-    def getChessNotation(self):
-        return self.getRankFile(self.startRow, self.startCol) + self.getRankFile(self.endRow, self.endCol)
-
-    def getRankFile(self, r, c):
-        return self.colsToFiles[c] + self.rowsToRanks[r]
 
     def getRows(self):
         return (self.endRow, self.endCol)
