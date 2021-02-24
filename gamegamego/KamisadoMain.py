@@ -34,7 +34,7 @@ def main():
     clock = p.time.Clock()
     screen.fill(p.Color("black"))
     gs = KamisadoEngine.GameState()
-    validMoves = gs.getValidMoves()
+    validMoves = gs.getValidMoves(0, [0])
     moveMade = False  # flag variable for when a move is made
     loadImages()
     running = True
@@ -49,10 +49,8 @@ def main():
             elif e.type == p.MOUSEBUTTONDOWN:
                 if not gameOver:
                     location = p.mouse.get_pos()  # (x,y) location of mouse
-                    print(location)
                     col = location[0] // SQ_SIZE
                     row = location[1] // SQ_SIZE
-                    print(col, row)
                     if sqSelected == (row, col):  # the user clicked the same square twice
                         sqSelected = (row, col)
                         playerClicks = []  # clear player clicks
@@ -61,14 +59,14 @@ def main():
                         playerClicks.append(sqSelected)  # append for both 1st and 2nd clicks
                     if len(playerClicks) == 2:  # after 2nd click
                         move = KamisadoEngine.Move(playerClicks[0], playerClicks[1], gs.board)
-                        # print(move.getChessNotation())
+                        #if playerClicks[0] == (8,8)
                         if move in validMoves:
                             moveMade = True
                             gs.makeMove(move)
-                            # gs.isWin(move)
                             sqSelected = ()  # reset user clicks
                             playerClicks = []  #
                         else:
+                            # break
                             playerClicks = [sqSelected]
             # key handlers
             elif e.type == p.KEYDOWN:
@@ -83,7 +81,7 @@ def main():
                     animate = False
         if moveMade:
             # animateMove(gs.moveLog[-1], screen, gs.board, clock)
-            validMoves = gs.getValidMoves()
+            validMoves = gs.getValidMoves(move.getRows(), gs.board)
             moveMade = False
 
         drawGameState(screen, gs, validMoves, sqSelected)

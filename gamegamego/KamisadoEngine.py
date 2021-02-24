@@ -35,7 +35,6 @@ class GameState():
         self.moveLog = []
         self.gameIsWon = False
         self.towerColor = 0
-        self.count =0
 
     '''Takes a Move as a prameter and executes it (this will not work for castling, pawn promotin, and en-passant'''
 
@@ -61,33 +60,34 @@ class GameState():
 
     '''All moves considering checks'''
 
-    def getValidMoves(self, endSq):
+    def getValidMoves(self, endSq, board):
+
         if endSq == 0:
             pass
         else:
             row = endSq[0]
             column = endSq[1]
             self.towerColor = self.boardColorValues[row][column]
-        self.getAllPossibleMoves()
-
+            print("Board getValidMoves",self.towerColor)
         return self.getAllPossibleMoves()  # for now we will not worry about checks
 
     '''All moves without considering checks'''
 
     def getAllPossibleMoves(self):
-        moves = [Move((7,4), (4,4), self.board)]
+        moves = []
         for r in range(len(self.board)):  # number of rows
             for c in range(len(self.board)):  # number of columns
                 turn = self.board[r][c][0]
                 if (turn == 'b' and self.blackToMove) or (turn == 'w' and not self.blackToMove):
                     piece = self.board[r][c][1]
-                    self.moveFunctions[piece](r, c, moves)  #
+                    self.moveFunctions[piece](r, c, moves)
         return moves
 
-    def checkTowerColor(self,r, c , moves):
-        self.getTowerMoves(r,c,moves)
+    def checkTowerColor(self, r, c, moves):
+        self.getTowerMoves(r, c, moves)
 
     '''Get all the tower moves for the tower located at row, col and add these moves to the list'''
+
     def getTowerMoves(self, r, c, moves):
         # spalte zeile
         __directionsBlack = ((-1, 0), (-1, -1), (-1, 1))
@@ -118,12 +118,10 @@ class GameState():
                             moves.append(Move((r, c), (endRow, endCol), self.board))
                         elif endPiece[0] != "--":  # not an allypiece (empty or enemypiece )
                             break
-                        else:  # friendl piece invalid
+                        else:  # friendly piece invalid
                             break
                     else:  # off board
                         break
-
-
 
     def isWin(self, r, c):
         if self.blackToMove:
@@ -149,12 +147,12 @@ class Move():
     def __init__(self, startSq, endSq, board):
         self.startRow = startSq[0]
         self.startCol = startSq[1]
-        #self.startRow = 7
-        #self.startCol = 7
         self.endRow = endSq[0]
         self.endCol = endSq[1]
         self.pieceMoved = board[self.startRow][self.startCol]
+
         self.pieceCaptured = board[self.endRow][self.endCol]
+
         self.moveID = self.startRow * 1000 + self.startCol * 100 + self.endRow * 10 + self.endCol
 
     '''Overriding the equals method'''
@@ -169,3 +167,6 @@ class Move():
 
     def getRankFile(self, r, c):
         return self.colsToFiles[c] + self.rowsToRanks[r]
+
+    def getRows(self):
+        return (self.endRow, self.endCol)
