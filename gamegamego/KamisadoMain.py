@@ -36,14 +36,15 @@ def main():
     gs = KamisadoEngine.GameState()
     validMoves = gs.getValidMoves(0, [0])
     moveMade = False  # flag variable for when a move is made
+    animate = False
     loadImages()
     running = True
     sqSelected = ()  # no square is selected, keep track of the last click of the user (tuple: (row, col))
     playerClicks = []  # keep track of player clicks (two tuples: [(6, 4), (4,4)])
     running = True
     gameOver = False
-    playerOne = True #If human is playing black, then this will be True, If an Ai is playing, then it will be false
-    playerTwo = False # Same as about but for white
+    playerOne = True  # If human is playing black, then this will be True, If an Ai is playing, then it will be false
+    playerTwo = False  # Same as about but for white
     while running:
         humanTurn = (gs.blackToMove and playerOne) or (not gs.blackToMove and playerTwo)
         for e in p.event.get():
@@ -82,15 +83,15 @@ def main():
                     moveMade = False
                     animate = False
 
-        #AI move finder
+        # AI move finder
         if not gameOver and not humanTurn:
             AIMove = KamisadoKI.findRandomMove(validMoves)
             gs.makeMove(AIMove)
-            moveMade =True
-            #animate = True
+            moveMade = True
+            animate = True
 
         if moveMade:
-            # animateMove(gs.moveLog[-1], screen, gs.board, clock)
+            animateMove(gs.moveLog[-1], screen, gs.board, clock)
             print(move.getRows())
             validMoves = gs.getValidMoves(move.getRows(), gs.boardColorValues)
             moveMade = False
@@ -109,17 +110,18 @@ def main():
 
 '''Highlight square selected and moves for piece selected'''
 
+
 def highlightSquare(screen, gs, validMoves, sqSelected):
     if sqSelected != ():
         r, c = sqSelected
         if gs.board[r][c][0] == ('b' if gs.blackToMove else 'w'):  # sqSelected is a piece that chan be moved
             # highlight selected square
             s = p.Surface((SQ_SIZE, SQ_SIZE))
-            s.set_alpha(100)  # transperancy value -> 0 transparent; 255 opaque
-            s.fill(p.Color('blue'))
+            s.set_alpha(30)  # transperancy value -> 0 transparent; 255 opaque
+            s.fill(p.Color('black'))
             screen.blit(s, (c * SQ_SIZE, r * SQ_SIZE))
             # highlight moves from that square
-            s.fill(p.Color('yellow'))
+            s.fill(p.Color('white'))
             for move in validMoves:
                 if move.startRow == r and move.startCol == c:
                     screen.blit(s, (move.endCol * SQ_SIZE, move.endRow * SQ_SIZE))
@@ -129,18 +131,21 @@ def highlightSquare(screen, gs, validMoves, sqSelected):
 Responsible for all the graphics within ta curent game state
 '''
 
+
 def drawGameState(screen, gs, validMoves, sqSelected):
     drawBoard(screen)  # draw squares on the board
     highlightSquare(screen, gs, validMoves, sqSelected)
     drawPieces(screen, gs.board)
 
+
 '''
 Draw the suwares on the board.
 '''
 
+
 def drawBoard(screen):
     intDimension = int(DIMENSION)
-
+    global colors
     colors = {
         "orange": p.Color("#FF6A00"),
         "blue": p.Color("#0026FF"),
@@ -247,7 +252,8 @@ def drawPieces(screen, board):
 
 '''Animating a move'''
 
-'''def animateMove(move, screen, board, clock):
+
+def animateMove(move, screen, board, clock):
     global colors
     coords = []  # list of coords that the animation will move through
     dR = move.endRow - move.startRow
@@ -259,8 +265,8 @@ def drawPieces(screen, board):
         drawBoard(screen)
         drawPieces(screen, board)
         # erase the piece moved from its ending square
-        color = colors[(move.endRow + move.endCol) % 2]
-        endSquare = p.Rect[(move.endCol * SQ_SIZE, move.endRow * SQ_SIZE, SQ_SIZE, SQ_SIZE)]
+        color = p.Color("#FF6A00")
+        endSquare = p.Rect(move.endCol * SQ_SIZE, move.endRow * SQ_SIZE, SQ_SIZE, SQ_SIZE)
         p.draw.rect(screen, color, endSquare)
         # draw captured piece onto rectangle
         if move.pieceCaptured != '--':
@@ -268,8 +274,7 @@ def drawPieces(screen, board):
         # draw moving piece
         screen.blit(IMAGES[move.pieceMoved], p.Rect(c * SQ_SIZE, r * SQ_SIZE, SQ_SIZE, SQ_SIZE))
         p.display.flip()
-        clock.tick(60)
-'''
+        clock.tick(120)
 
 
 def drawText(screen, text):

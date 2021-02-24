@@ -30,7 +30,6 @@ class GameState():
             ["b8", "b7", "b6", "b5", "b4", "b3", "b2", "b1"]
         ]
 
-
         self.boardColorValues = [
             [1, 2, 3, 4, 5, 6, 7, 8],
             [6, 1, 4, 7, 2, 5, 8, 3],
@@ -119,7 +118,7 @@ class GameState():
     '''Get all the tower moves for the tower located at row, col and add these moves to the list'''
 
     def getTowerMoves(self, r, c, moves):
-        self.isBlocked(r,c, moves)
+        self.isBlocked(r, c, moves)
         # spalte zeile
         if self.blackToMove:  # black player move
             for d in self.__directionsBlack:
@@ -153,7 +152,7 @@ class GameState():
                     else:  # off board
                         break
 
-    def isBlocked(self,r ,c , moves):
+    def isBlocked(self, r, c, moves):
         if self.blackToMove:
             pass
         else:
