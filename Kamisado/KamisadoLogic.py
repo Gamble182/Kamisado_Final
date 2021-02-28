@@ -55,7 +55,6 @@ class Board():
         self.pieces[int(self.n - 1)][int(self.n - 3)] = 3
         self.pieces[int(self.n - 1)][int(self.n - 2)] = 2
         self.pieces[int(self.n - 1)][int(self.n - 1)] = 1
-        # add [][] indexer syntax to the Board
 
     def __getitem__(self, index):
         return self.pieces[index]
@@ -123,15 +122,30 @@ class Board():
         # print(move)
         pass
 
-
 class ColorBoard():
-    Board = [
-        [1, 2, 3, 4, 5, 6, 7, 8],
-        [6, 1, 4, 7, 2, 5, 8, 3],
-        [7, 4, 1, 6, 3, 8, 5, 2],
-        [4, 3, 2, 1, 8, 7, 6, 5],
-        [5, 6, 7, 8, 1, 2, 3, 4],
-        [2, 5, 8, 3, 6, 1, 4, 7],
-        [3, 8, 5, 2, 7, 4, 1, 6],
-        [8, 7, 6, 5, 4, 3, 2, 1]
+    def __init__(self, n):
+        self.n = n
+
+    Orange = 1,
+    Blue = 2,
+    Purple = 3,
+    Pink = 4,
+    Yellow = 5,
+    Red = 6,
+    Green = 7,
+    Brown = 8
+
+    colorBoard = [
+        [Orange, Blue, Purple, Pink, Yellow, Red, Green, Brown],
+        [Red, Orange, Pink, Green, Blue, Yellow, Brown, Purple],
+        [Green, Pink, Orange, Red, Purple, Brown, Yellow, Blue],
+        [Pink, Purple, Blue, Orange, Brown, Green, Red, Yellow],
+        [Yellow, Red, Green, Brown, Orange, Blue, Purple, Pink],
+        [Blue, Yellow, Brown, Purple, Red, Orange, Pink, Green],
+        [Purple, Brown, Yellow, Blue, Green, Pink, Orange, Red],
+        [Brown, Green, Red, Yellow, Pink, Purple, Blue, Orange]
     ]
+
+    def get_board_color(self, row, column):
+        cb = ColorBoard(self.n)
+        return cb.colorBoard[row][column]

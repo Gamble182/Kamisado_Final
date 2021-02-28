@@ -39,17 +39,6 @@ class KamisadoGame():
         +8: "b8"
     }
 
-    square_content_colors = {
-        1: "orange",
-        2: "blue",
-        3: "purple",
-        4: "pink",
-        5: "yellow",
-        6: "red",
-        7: "green",
-        8: "brown"
-    }
-
     @staticmethod
     def getSquarePiece(piece):
         return KamisadoGame.square_content_pieces[piece]
@@ -82,15 +71,11 @@ class KamisadoGame():
         b = Board(self.n)
         b.pieces = np.copy(board)
         legalMoves = b.get_legal_moves(player)
-        print("legalMoves")
-        print(legalMoves)
         if len(legalMoves) == 0:
             valids[-1] = 1
             return np.array(valids)
         for x, y in legalMoves:
             valids[self.n * x + y] = 1
-        print("valids")
-        print(valids)
         return np.array(valids)
 
     def getGameEnded(self, board, player):
