@@ -70,7 +70,7 @@ class Board():
             for x in range(self.n):
                 if self[x][y] == color:
                   #  piece = ColorBoard.Board[x][y]
-                   # if piece == 1: # TODO get field-color of last move
+                   # if piece == 1: #
                     newmoves = self.get_moves_for_square((x, y))
                     moves.update(newmoves)
         return list(moves)
