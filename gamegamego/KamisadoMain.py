@@ -22,7 +22,6 @@ def loadImages():
     for piece in pieces:
         IMAGES[piece] = p.transform.scale(p.image.load("images/" + piece + ".png"), (SQ_SIZE, SQ_SIZE))
 
-
 '''
 The main driver for our code. This will handle user input and updating the graphics
 '''
@@ -34,7 +33,7 @@ def main():
     clock = p.time.Clock()
     screen.fill(p.Color("black"))
     gs = KamisadoEngine.GameState()
-    validMoves = gs.getValidMoves(0, [0])
+    validMoves = gs.getValidMoves(0, [])
     moveMade = False  # flag variable for when a move is made
     animate = False
     loadImages()
@@ -44,7 +43,7 @@ def main():
     running = True
     gameOver = False
     playerOne = True  # If human is playing black, then this will be True, If an Ai is playing, then it will be false
-    playerTwo = False  # Same as about but for white
+    playerTwo = True  # Same as about but for white
     while running:
         humanTurn = (gs.blackToMove and playerOne) or (not gs.blackToMove and playerTwo)
         for e in p.event.get():
@@ -70,7 +69,7 @@ def main():
                             sqSelected = ()  # reset user clicks
                             playerClicks = []  #
                         else:
-                            playerClicks = [sqSelected]
+                            playerClicks = [sqSelected] ######
             # key handlers
             elif e.type == p.KEYDOWN:
                 if e.key == p.K_z:  # undo when 'z' is pressed
@@ -88,11 +87,10 @@ def main():
             AIMove = KamisadoKI.findRandomMove(validMoves)
             gs.makeMove(AIMove)
             moveMade = True
-            animate = True
+            #animate = True
 
         if moveMade:
-            animateMove(gs.moveLog[-1], screen, gs.board, clock)
-            print(move.getRows())
+            #animateMove(gs.moveLog[-1], screen, gs.board, clock)
             validMoves = gs.getValidMoves(move.getRows(), gs.boardColorValues)
             moveMade = False
 
@@ -109,7 +107,6 @@ def main():
 
 
 '''Highlight square selected and moves for piece selected'''
-
 
 def highlightSquare(screen, gs, validMoves, sqSelected):
     if sqSelected != ():
@@ -141,7 +138,6 @@ def drawGameState(screen, gs, validMoves, sqSelected):
 '''
 Draw the suwares on the board.
 '''
-
 
 def drawBoard(screen):
     intDimension = int(DIMENSION)

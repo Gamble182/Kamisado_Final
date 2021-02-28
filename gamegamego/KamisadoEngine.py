@@ -6,19 +6,7 @@ responsible for determining the valid moves at the current state. It will also k
 
 class GameState():
     def __init__(self):
-        '''
-        self.board = [
-            ["--", "--", "w3", "w4", "w5", "w6", "w7", "w8"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["--", "--", "--", "--", "--", "--", "w1", "w2"],
-            ["b8", "b7", "b6", "b5", "b4", "b3", "b2", "b1"]
-        ]
 
-        '''
         self.board = [
             ["w1", "w2", "w3", "w4", "w5", "w6", "w7", "w8"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
@@ -40,9 +28,7 @@ class GameState():
             [3, 8, 5, 2, 7, 4, 1, 6],
             [8, 7, 6, 5, 4, 3, 2, 1]
         ]
-        '''self.moveFunctions = {'8': self.getTowerMoves, '7': self.getTowerMoves, '6': self.getTowerMoves,
-                              '5': self.getTowerMoves, '4': self.getTowerMoves, '3': self.getTowerMoves,
-                              '2': self.getTowerMoves, '1': self.getTowerMoves}'''
+
         self.__directionsBlack = ((-1, 0), (-1, -1), (-1, 1))
         self.__directionsWhite = ((1, 0), (1, 1), (1, -1))
 
@@ -57,7 +43,6 @@ class GameState():
         self.board[move.startRow][move.startCol] = "--"
         self.board[move.endRow][move.endCol] = move.pieceMoved
         self.moveLog.append(move)  # log the move so we can undo it later
-
         self.blackToMove = not self.blackToMove  # swap players
         self.isWin(move.endRow, move.endCol)
 
@@ -73,7 +58,6 @@ class GameState():
     '''All moves considering checks'''
 
     def getValidMoves(self, endSq, board):
-        print("endSq", endSq)
         if endSq == 0:
             pass
         else:
@@ -82,8 +66,8 @@ class GameState():
             self.fieldColor = board[row][column]
             for i in range(len(self.board)):
                 print(self.board[i])
-            print("Board getValidMoves towerColor", self.fieldColor)
-        return self.getAllPossibleMoves()  # for now we will not worry about checks
+            print(" ")
+        return self.getAllPossibleMoves()  #
 
     '''All moves without considering checks'''
 
@@ -118,7 +102,6 @@ class GameState():
     '''Get all the tower moves for the tower located at row, col and add these moves to the list'''
 
     def getTowerMoves(self, r, c, moves):
-        self.isBlocked(r, c, moves)
         # spalte zeile
         if self.blackToMove:  # black player move
             for d in self.__directionsBlack:
@@ -152,12 +135,6 @@ class GameState():
                     else:  # off board
                         break
 
-    def isBlocked(self, r, c, moves):
-        if self.blackToMove:
-            pass
-        else:
-            pass
-
     def isWin(self, r, c):
         if self.blackToMove:
             for i in range(8):
@@ -176,9 +153,7 @@ class Move():
         self.endRow = endSq[0]
         self.endCol = endSq[1]
         self.pieceMoved = board[self.startRow][self.startCol]
-
         self.pieceCaptured = board[self.endRow][self.endCol]
-
         self.moveID = self.startRow * 1000 + self.startCol * 100 + self.endRow * 10 + self.endCol
 
     '''Overriding the equals method'''
